@@ -8,7 +8,8 @@ import cv2
 
 BUF_SIZE = 60
 
-parser = argparse.ArgumentParser(description='Webcam motion recorder')
+parser = argparse.ArgumentParser(description='Webcam motion recorder',
+                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 vid = []
 edges = []
