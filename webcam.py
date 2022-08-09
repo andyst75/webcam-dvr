@@ -13,12 +13,19 @@ parser = argparse.ArgumentParser(description='Webcam motion recorder',
 
 vid = []
 edges = []
-
+medians = []
 
 def get_edges(img):
+    global medians
+    
     img_gray = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2GRAY)
     img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
     m = np.median(img_blur)
+    medians.append(m)
+    medians = medians[-BUF_SIZE:]
+
+    m = np.mean(medians)
+    
     if m < 5:
         th1, th2 = 10, 30
     elif m < 50:
@@ -108,11 +115,15 @@ if __name__ == "__main__":
                 videoWriter.write(frame)
 
             cnt = 0
+            total = 0
             while (True):
                 ret, frame = capture.read()
                 if ret:
 
                     videoWriter.write(frame)
+                    total += 1
+                    if total > 20 * 60 * fps: # record is very long
+                        break
 
                     vid.append(frame)
                     edge = get_edges(frame)
