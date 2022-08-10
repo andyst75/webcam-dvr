@@ -38,7 +38,7 @@ def get_edges(img):
 def get_diff(edges):
     edges = np.vstack(edges).astype(float) / 255.
     buf = np.mean(edges, axis=0)
-    cur = np.mean(edges[-3:], axis=0)
+    cur = np.mean(edges[-5:], axis=0)
     
     diff = (((buf - cur) ** 2) ** 0.5).sum() / (cur.sum() + 1.0)
     return diff
