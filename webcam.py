@@ -26,11 +26,7 @@ def get_edges(img):
 
     m = np.mean(medians)
     
-    if m < 5:
-        th1, th2 = 10, 30
-    elif m < 50:
-        th1, th2 = 30, 80
-    elif m < 100:
+    if m < 50:
         th1, th2 = 50, 150
     else:
         th1, th2 = 100, 200
